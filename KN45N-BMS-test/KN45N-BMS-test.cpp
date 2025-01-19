@@ -14,46 +14,46 @@
 
 
 /*============================================================================================================================================================================
-Defines     Var                         Val               Mô tả
+Defines     Var                             Val             Mô tả
 ============================================================================================================================================================================*/
 // SPI defines
-#define     SPI_PORT                    spi0
-#define     PIN_MISO                    16
-#define     PIN_CS                      17
-#define     PIN_SCK                     18
-#define     PIN_MOSI                    19
+#define     SPI_PORT                        spi0
+#define     PIN_MISO                        16
+#define     PIN_CS                          17
+#define     PIN_SCK                         18
+#define     PIN_MOSI                        19
 
 // I2C defines (Default 400KHz)
-#define     I2C_PORT                    i2c0
-#define     I2C_SDA                     8
-#define     I2C_SCL                     9
+#define     I2C_PORT                        i2c0
+#define     I2C_SDA                         8
+#define     I2C_SCL                         9
 
-// UART defines (default the stdout UART is `uart0`)
-#define     UART_ID                     uart1
-#define     BAUD_RATE                   115200
+// UART defines (default UART 'uart0')
+#define     UART_ID                         uart1
+#define     BAUD_RATE                       115200
 // PIN
-#define     UART_TX_PIN                 4
-#define     UART_RX_PIN                 5
+#define     UART_TX_PIN                     4
+#define     UART_RX_PIN                     5
 
 // ACPI 5.0 defines
-#define     CMD_BATTERY_STATUS          0x16
-#define     CMD_REMAINING_CAPACITY      0x0F
-#define     CMD_VOLTAGE                 0x09
-#define     CMD_CURRENT                 0x0A
-#define     CMD_DESIGN_CAPACITY         0x18
-#define     CMD_FULL_CHARGE_CAPACITY    0x10
-#define     CMD_CYCLE_COUNT             0x17
-#define     CMD_TEMPERATURE             0x08
-#define     CMD_RELATIVE_SOC            0x0D
-#define     CMD_ABSOLUTE_SOC            0x0E
-#define     CMD_AVG_TIME_TO_EMPTY       0x12
-#define     CMD_AVG_TIME_TO_FULL        0x13
-#define     CMD_CHARGING_CURRENT        0x14
-#define     CMD_CHARGING_VOLTAGE        0x15
-#define     CMD_MANUFACTURER_NAME       0x20
-#define     CMD_DEVICE_NAME             0x21
-#define     CMD_SERIAL_NUMBER           0x1C
-#define     CMD_ALARM_CAPACITY          0x1A
+#define     CMD_BATTERY_STATUS              0x16
+#define     CMD_REMAINING_CAPACITY          0x0F
+#define     CMD_VOLTAGE                     0x09
+#define     CMD_CURRENT                     0x0A
+#define     CMD_DESIGN_CAPACITY             0x18
+#define     CMD_FULL_CHARGE_CAPACITY        0x10
+#define     CMD_CYCLE_COUNT                 0x17
+#define     CMD_TEMPERATURE                 0x08
+#define     CMD_RELATIVE_SOC                0x0D
+#define     CMD_ABSOLUTE_SOC                0x0E
+#define     CMD_AVG_TIME_TO_EMPTY           0x12
+#define     CMD_AVG_TIME_TO_FULL            0x13
+#define     CMD_CHARGING_CURRENT            0x14
+#define     CMD_CHARGING_VOLTAGE            0x15
+#define     CMD_MANUFACTURER_NAME           0x20
+#define     CMD_DEVICE_NAME                 0x21
+#define     CMD_SERIAL_NUMBER               0x1C
+#define     CMD_ALARM_CAPACITY              0x1A
 
 
 
@@ -88,7 +88,7 @@ const   char        serialNumber[]          = "0001";       // Số serial duy n
 
 
 /*============================================================================================================================================================================
-Funsion
+Main Funsion
 ============================================================================================================================================================================*/
 int main()
 {
@@ -148,3 +148,9 @@ int main()
         sleep_ms(1000);
     }
 }
+
+/*============================================================================================================================================================================
+Sub Funsion
+============================================================================================================================================================================*/
+
+
