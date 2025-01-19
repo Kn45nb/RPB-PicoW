@@ -16,28 +16,22 @@
 /*============================================================================================================================================================================
 Defines     Var                         Val               Mô tả
 ============================================================================================================================================================================*/
-// We are going to use SPI 0, and allocate it to the following GPIO pins
-// Pins can be changed, see the GPIO function select table in the datasheet for information on GPIO assignments
+// SPI defines
 #define     SPI_PORT                    spi0
 #define     PIN_MISO                    16
 #define     PIN_CS                      17
 #define     PIN_SCK                     18
 #define     PIN_MOSI                    19
 
-// I2C defines
-// This example will use I2C0 on GPIO8 (SDA) and GPIO9 (SCL) running at 400KHz.
-// Pins can be changed, see the GPIO function select table in the datasheet for information on GPIO assignments
+// I2C defines (Default 400KHz)
 #define     I2C_PORT                    i2c0
 #define     I2C_SDA                     8
 #define     I2C_SCL                     9
 
-// UART defines
-// By default the stdout UART is `uart0`, so we will use the second one
+// UART defines (default the stdout UART is `uart0`)
 #define     UART_ID                     uart1
 #define     BAUD_RATE                   115200
-
-// Use pins 4 and 5 for UART1
-// Pins can be changed, see the GPIO function select table in the datasheet for information on GPIO assignments
+// PIN
 #define     UART_TX_PIN                 4
 #define     UART_RX_PIN                 5
 
@@ -107,8 +101,8 @@ int main()
         return -1;
     }
 
-    // SPI initialisation. This example will use SPI at 1MHz.
-    spi_init(SPI_PORT, 1000*1000);
+    // SPI initialisation
+    spi_init(SPI_PORT, 1000*1000);                  // 1MHz
     gpio_set_function(PIN_MISO, GPIO_FUNC_SPI);
     gpio_set_function(PIN_CS,   GPIO_FUNC_SIO);
     gpio_set_function(PIN_SCK,  GPIO_FUNC_SPI);
@@ -117,16 +111,16 @@ int main()
     // Chip select is active-low, so we'll initialise it to a driven-high state
     gpio_set_dir(PIN_CS, GPIO_OUT);
     gpio_put(PIN_CS, 1);
-    // For more examples of SPI use see https://github.com/raspberrypi/pico-examples/tree/master/spi
+    // https://github.com/raspberrypi/pico-examples/tree/master/spi
 
-    // I2C Initialisation. Using it at 400Khz.
-    i2c_init(I2C_PORT, 400*1000);
+    // I2C Initialisation
+    i2c_init(I2C_PORT, 400*1000);                   // 400Khz
     
     gpio_set_function(I2C_SDA, GPIO_FUNC_I2C);
     gpio_set_function(I2C_SCL, GPIO_FUNC_I2C);
     gpio_pull_up(I2C_SDA);
     gpio_pull_up(I2C_SCL);
-    // For more examples of I2C use see https://github.com/raspberrypi/pico-examples/tree/master/i2c
+    // https://github.com/raspberrypi/pico-examples/tree/master/i2c
 
     // Example to turn on the Pico W LED
     cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 1);
@@ -148,7 +142,9 @@ int main()
 
     while (true)
     {
+
         printf("Hello, world!\n");
+        
         sleep_ms(1000);
     }
 }
