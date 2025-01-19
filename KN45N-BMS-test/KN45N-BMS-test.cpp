@@ -1,45 +1,108 @@
-#include <stdio.h>
-#include "pico/stdlib.h"
-#include "hardware/spi.h"
-#include "hardware/i2c.h"
-#include "pico/cyw43_arch.h"
-#include "hardware/uart.h"
+/*============================================================================================================================================================================
+#include    lib 
+============================================================================================================================================================================*/
+#include    <stdio.h>
+#include    <stdint.h>
 
-// SPI Defines
+// SDK Pico 2.0.0
+#include    "pico/stdlib.h"
+#include    "hardware/spi.h"
+#include    "hardware/i2c.h"
+#include    "pico/cyw43_arch.h"
+#include    "hardware/uart.h"
+
+
+
+/*============================================================================================================================================================================
+Defines     Var                         Val               Mô tả
+============================================================================================================================================================================*/
 // We are going to use SPI 0, and allocate it to the following GPIO pins
 // Pins can be changed, see the GPIO function select table in the datasheet for information on GPIO assignments
-#define SPI_PORT spi0
-#define PIN_MISO 16
-#define PIN_CS   17
-#define PIN_SCK  18
-#define PIN_MOSI 19
+#define     SPI_PORT                    spi0
+#define     PIN_MISO                    16
+#define     PIN_CS                      17
+#define     PIN_SCK                     18
+#define     PIN_MOSI                    19
 
 // I2C defines
 // This example will use I2C0 on GPIO8 (SDA) and GPIO9 (SCL) running at 400KHz.
 // Pins can be changed, see the GPIO function select table in the datasheet for information on GPIO assignments
-#define I2C_PORT i2c0
-#define I2C_SDA 8
-#define I2C_SCL 9
-
+#define     I2C_PORT                    i2c0
+#define     I2C_SDA                     8
+#define     I2C_SCL                     9
 
 // UART defines
 // By default the stdout UART is `uart0`, so we will use the second one
-#define UART_ID uart1
-#define BAUD_RATE 115200
+#define     UART_ID                     uart1
+#define     BAUD_RATE                   115200
 
 // Use pins 4 and 5 for UART1
 // Pins can be changed, see the GPIO function select table in the datasheet for information on GPIO assignments
-#define UART_TX_PIN 4
-#define UART_RX_PIN 5
+#define     UART_TX_PIN                 4
+#define     UART_RX_PIN                 5
+
+// ACPI 5.0 defines
+#define     CMD_BATTERY_STATUS          0x16
+#define     CMD_REMAINING_CAPACITY      0x0F
+#define     CMD_VOLTAGE                 0x09
+#define     CMD_CURRENT                 0x0A
+#define     CMD_DESIGN_CAPACITY         0x18
+#define     CMD_FULL_CHARGE_CAPACITY    0x10
+#define     CMD_CYCLE_COUNT             0x17
+#define     CMD_TEMPERATURE             0x08
+#define     CMD_RELATIVE_SOC            0x0D
+#define     CMD_ABSOLUTE_SOC            0x0E
+#define     CMD_AVG_TIME_TO_EMPTY       0x12
+#define     CMD_AVG_TIME_TO_FULL        0x13
+#define     CMD_CHARGING_CURRENT        0x14
+#define     CMD_CHARGING_VOLTAGE        0x15
+#define     CMD_MANUFACTURER_NAME       0x20
+#define     CMD_DEVICE_NAME             0x21
+#define     CMD_SERIAL_NUMBER           0x1C
+#define     CMD_ALARM_CAPACITY          0x1A
 
 
 
+/*============================================================================================================================================================================
+Const Type        Var                       Val             Mô tả                                               Đơn vị      Note
+============================================================================================================================================================================*/
+        uint16_t    batteryStatus           = 0x0004;       // Trạng thái pin                                   N/a         Bắt buộc
+                                                                                                                            // 0x0001: Sạc
+                                                                                                                            // 0x0002: Xả
+                                                                                                                            // 0x0004: Full
+                                                                                                                            // 0x0008: Low
+                                                                                                                            // 0x0010: Error
+        uint16_t    remainingCapacity       = 900;          // Dung lượng còn lại của pin                       mAh
+        uint16_t    voltage                 = 19000;        // Điện áp hiện tại của pin                         mV
+        uint16_t    current                 = 7000;         // Dòng điện pin đang cấp hoặc nhận                 mA          Âm sạc, dương xả
+const   uint16_t    designCapacity          = 1000;         // Dung lượng thiết kế của pin                      mAh         Không đổi trong vòng đời Cell
+        uint16_t    fullChargeCapacity      = 950;          // Dung lượng thực khi sạc đầy                      mAh         
+        uint16_t    cycleCount              = 10;           // Số chu kỳ sạc-xả                                 Times
+        uint16_t    temperature             = 2980;         // Nhiệt độ hiện tại của pin                        Kelvin
+        uint8_t     relativeSOC             = 75;           // Dung lượng còn lại với dung lượng thực           %           =remainingCapacity/fullChargeCapacity to 8bit
+        uint8_t     absoluteSOC             = 70;           // Dung lượng còn lại với dung lượng thiết kế       %           =remainingCapacity/designCapacity to 8 bit
+        uint16_t    avgTimeToEmpty          = 90;           // Thời gian trung bình cho đến khi pin cạn         Minutes     chỉ áp dụng khi đang dùng   |
+        uint16_t    avgTimeToFull           = 120;          // Thời gian trung bình để sạc đầy                  Minutes     Chỉ áp dụng khi đang sạc    |mạch sạc xả cùng chân
+        uint16_t    chargingCurrent         = 2000;         // Dòng điện sạc hiện tại                           mA
+        uint16_t    chargingVoltage         = 12500;        // Điện áp sạc hiện tại                             mV
+const   char        manufacturerName[]      = "Notebook";   // Tên nhà sản xuất pin                             N/a
+const   char        deviceName[]            = "BAT";        // Tên thiết bị pin                                 N/a
+const   char        serialNumber[]          = "0001";       // Số serial duy nhất của pin                       N/a
+        uint16_t    alarmCapacity           = 500;          // Dung lượng ngưỡng cảnh báo pin yếu               mAh         Tùy thuộc vào Cell
+        uint8_t     currentCommand          = 0x00;         // Lưu lệnh hiện tại từ Motherboard IMB410TN        N/a
+
+
+
+/*============================================================================================================================================================================
+Funsion
+============================================================================================================================================================================*/
 int main()
 {
     stdio_init_all();
 
     // Initialise the Wi-Fi chip
-    if (cyw43_arch_init()) {
+    if (cyw43_arch_init())
+    {
         printf("Wi-Fi init failed\n");
         return -1;
     }
@@ -83,7 +146,8 @@ int main()
     
     // For more examples of UART use see https://github.com/raspberrypi/pico-examples/tree/master/uart
 
-    while (true) {
+    while (true)
+    {
         printf("Hello, world!\n");
         sleep_ms(1000);
     }
