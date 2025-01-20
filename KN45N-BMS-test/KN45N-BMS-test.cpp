@@ -137,14 +137,20 @@ int main()
 
 
     // I2C Initialisation
-    i2c_init(I2C_PORT, 400*1000);                   // 400Khz
+    i2c_init(I2C_PORT, 100*1000);                   // 400Khz
     gpio_set_function(I2C_SDA, GPIO_FUNC_I2C);
     gpio_set_function(I2C_SCL, GPIO_FUNC_I2C);
     gpio_pull_up(I2C_SDA);
     gpio_pull_up(I2C_SCL);
     // https://github.com/raspberrypi/pico-examples/tree/master/i2c
 
+    SSD1306 oled(i2c0);
+    oled.begin();
+    oled.clearDisplay();
 
+    // Hiển thị văn bản
+    oled.printText(0, 0, "Hello, OLED!", true);
+    oled.display();
     
     
     
