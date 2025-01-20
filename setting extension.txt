@@ -1,7 +1,0 @@
-c:\Users\kn45n\AppData\Local\Programs\Python\Python313\python.exe
-
-Cmake:
-${HOME}/.pico-sdk/cmake/v3.29.9/bin/cmake
-
-Ninja:
-${HOME}/.pico-sdk/ninja/v1.12.1/ninja

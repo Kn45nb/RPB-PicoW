@@ -5,7 +5,7 @@
 #include    <stdint.h>
 
 
-// SDK Pico 2.1.0
+// SDK Pico 2.0.0/2.1.0
 #include    "pico/stdlib.h"
 #include    "hardware/spi.h"
 #include    "hardware/i2c.h"
