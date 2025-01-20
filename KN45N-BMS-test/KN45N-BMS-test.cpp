@@ -4,6 +4,7 @@
 #include    <stdio.h>
 #include    <stdint.h>
 
+
 // SDK Pico 2.0.0
 #include    "pico/stdlib.h"
 #include    "hardware/spi.h"
@@ -11,7 +12,9 @@
 #include    "pico/cyw43_arch.h"
 #include    "hardware/uart.h"
 
+
 // Other Lib
+
 
 
 /*============================================================================================================================================================================
@@ -24,6 +27,7 @@ Defines     Var                             Val             Mô tả
 #define     PIN_SCK                         18
 #define     PIN_MOSI                        19
 
+
 // I2C defines (Default 400KHz)
 #define     I2C_PORT                        i2c0
 #define     I2C_SDA                         8
@@ -33,12 +37,14 @@ Defines     Var                             Val             Mô tả
 #define     SCREEN_WIDTH                    128
 #define     SCREEN_HEIGHT                   64
 
+
 // UART defines (default UART 'uart0')
 #define     UART_ID                         uart1
 #define     BAUD_RATE                       115200
 // PIN
 #define     UART_TX_PIN                     4
 #define     UART_RX_PIN                     5
+
 
 // ACPI 5.0 defines
 #define     CMD_BATTERY_STATUS              0x16
@@ -116,12 +122,14 @@ const uint8_t ssd1306_init_cmds[] =
     0xAF        // Display ON
 };
 
+
 // Hàm gửi lệnh tới SSD1306
 void ssd1306_send_command(uint8_t cmd)
 {
     uint8_t buffer[2] = {0x00, cmd};
     i2c_write_blocking(I2C_PORT, SSD1306_I2C_ADDR, buffer, 2, false);
 }
+
 
 // Hàm gửi dữ liệu tới SSD1306
 void ssd1306_send_data(uint8_t *data, size_t len)
@@ -132,6 +140,7 @@ void ssd1306_send_data(uint8_t *data, size_t len)
     i2c_write_blocking(I2C_PORT, SSD1306_I2C_ADDR, buffer, len + 1, false);
 }
 
+
 // Hàm khởi tạo SSD1306
 void ssd1306_init()
 {
@@ -139,6 +148,7 @@ void ssd1306_init()
         ssd1306_send_command(ssd1306_init_cmds[i]);
     }
 }
+
 
 // Hàm làm sạch màn hình SSD1306
 void ssd1306_clear()
@@ -151,6 +161,7 @@ void ssd1306_clear()
         ssd1306_send_data(buffer, SCREEN_WIDTH);
     }
 }
+
 
 // Hàm hiển thị chuỗi ký tự trên SSD1306
 void ssd1306_display_text(const char *text)
@@ -172,12 +183,14 @@ int main()
 {
     stdio_init_all();
 
+
     // Initialise the Wi-Fi chip
     if (cyw43_arch_init())
     {
         printf("Wi-Fi init failed\n");
         return -1;
     }
+
 
     // SPI initialisation
     // spi_init(SPI_PORT, 1000*1000);                  // 1MHz
@@ -191,33 +204,17 @@ int main()
     // https://github.com/raspberrypi/pico-examples/tree/master/spi
 
 
-
-
     // I2C Initialisation
-    i2c_init(I2C_PORT, 400*1000);                   // 400Khz
+    // i2c_init(I2C_PORT, 400*1000);                   // 400Khz
     
     gpio_set_function(I2C_SDA, GPIO_FUNC_I2C);
     gpio_set_function(I2C_SCL, GPIO_FUNC_I2C);
     gpio_pull_up(I2C_SDA);
     gpio_pull_up(I2C_SCL);
     // https://github.com/raspberrypi/pico-examples/tree/master/i2c
-    // Khởi tạo SSD1306
-    ssd1306_init();
-    ssd1306_clear();
 
-    // Hiển thị "Hello"
-    ssd1306_display_text("Hello");
 
-    while (true)
-    {
-        tight_loop_contents();
-        // Example to turn on the Pico W LED
-        cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 1);
-        
-        cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 1);
-    }
 
-    return 0;
     
     
     
@@ -234,20 +231,18 @@ int main()
     
     // Use some the various UART functions to send out data
     // In a default system, printf will also output via the default UART
-
-
-
-
     // Send out a string, with CR/LF conversions
     // uart_puts(UART_ID, " Hello, UART!\n");
-    
     // For more examples of UART use see https://github.com/raspberrypi/pico-examples/tree/master/uart
 
-    // while (true)
-    // {
 
-    //     printf("Hello, world!\n");
-        
-    //     sleep_ms(1000);
-    // }
+    while (true)
+    {
+        tight_loop_contents();
+        // Pico W LED
+        cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 1);
+        sleep_ms(1000);
+        cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 0);
+        sleep_ms(1000);
+    }
 }
