@@ -83,7 +83,7 @@ Const Type        Var                       Val             Mô tả            
                                                                                                                             // 0x0010: Error
         uint16_t    remainingCapacity       = 900;          // Dung lượng còn lại của pin                       mAh         
         uint16_t    voltage                 = 19000;        // Điện áp hiện tại của pin                         mV
-        int16_t    current                 = 7000;         // Dòng điện pin đang cấp hoặc nhận                 mA          Âm sạc, dương xả
+        int16_t     current                 = 7000;         // Dòng điện pin đang cấp hoặc nhận                 mA          Âm sạc, dương xả
 const   uint16_t    designCapacity          = 1000;         // Dung lượng thiết kế của pin                      mAh         Không đổi trong vòng đời Cell
         uint16_t    fullChargeCapacity      = 950;          // Dung lượng thực khi sạc đầy                      mAh         
         uint16_t    cycleCount              = 10;           // Số chu kỳ sạc-xả                                 Times
