@@ -11,11 +11,11 @@
 #include    "hardware/i2c.h"
 #include    "pico/cyw43_arch.h"
 #include    "hardware/uart.h"
-#include    "ssd1306.h" // Include the SSD1306 library
 
 
 // Other Lib
-
+#include    "path/to/ssd1306.h" // Include the SSD1306 library
+#include    "ssd1306.h"
 
 
 /*============================================================================================================================================================================
