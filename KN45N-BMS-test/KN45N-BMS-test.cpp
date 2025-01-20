@@ -11,6 +11,7 @@
 #include    "hardware/i2c.h"
 #include    "pico/cyw43_arch.h"
 #include    "hardware/uart.h"
+#include    "ssd1306.h" // Include the SSD1306 library
 
 
 // Other Lib
@@ -33,9 +34,13 @@ Defines     Var                             Val             Mô tả
 #define     I2C_SDA                         8
 #define     I2C_SCL                         9
 // SSD1306 defines
-#define     SSD1306_I2C_ADDR                0x3C            // Địa chỉ I2C của SSD1306
 #define     SCREEN_WIDTH                    128
 #define     SCREEN_HEIGHT                   64
+#define     OLED_RESET                      -1
+#define     SCREEN_ADDRESS                  0x3C
+
+
+
 
 
 // UART defines (default UART 'uart0')
@@ -101,80 +106,15 @@ const   char        serialNumber[]          = "0001";       // Số serial duy n
 /*============================================================================================================================================================================
 Sub Funsion
 ============================================================================================================================================================================*/
-// Lệnh khởi tạo SSD1306
-const uint8_t ssd1306_init_cmds[] = 
-{
-    0xAE,       // Display OFF
-    0xD5, 0x80, // Set Display Clock Div
-    0xA8, 0x3F, // Set Multiplex Ratio (1/64)
-    0xD3, 0x00, // Set Display Offset
-    0x40,       // Set Start Line Address
-    0x8D, 0x14, // Enable charge pump
-    0x20, 0x00, // Set Memory Addressing Mode (Horizontal addressing mode)
-    0xA1,       // Set Segment Re-map (mirror horizontally)
-    0xC8,       // Set COM Output Scan Direction (mirror vertically)
-    0xDA, 0x12, // Set COM Pins Hardware Configuration
-    0x81, 0xCF, // Set Contrast Control
-    0xD9, 0xF1, // Set Pre-charge Period
-    0xDB, 0x40, // Set VCOMH Deselect Level
-    0xA4,       // Disable Entire Display On
-    0xA6,       // Set Normal Display
-    0xAF        // Display ON
-};
 
-
-// Hàm gửi lệnh tới SSD1306
-void ssd1306_send_command(uint8_t cmd)
-{
-    uint8_t buffer[2] = {0x00, cmd};
-    i2c_write_blocking(I2C_PORT, SSD1306_I2C_ADDR, buffer, 2, false);
+// Function to initialize the SSD1306 display
+void init_display() {
+    ssd1306_t disp;
+    ssd1306_init(&disp, I2C_PORT, SCREEN_ADDRESS, SCREEN_WIDTH, SCREEN_HEIGHT);
+    ssd1306_clear(&disp);
+    ssd1306_draw_string(&disp, 0, 0, 1, "Hello, OLED!");
+    ssd1306_show(&disp);
 }
-
-
-// Hàm gửi dữ liệu tới SSD1306
-void ssd1306_send_data(uint8_t *data, size_t len)
-{
-    uint8_t buffer[len + 1];
-    buffer[0] = 0x40; // Byte đầu tiên là chỉ báo dữ liệu
-    memcpy(&buffer[1], data, len);
-    i2c_write_blocking(I2C_PORT, SSD1306_I2C_ADDR, buffer, len + 1, false);
-}
-
-
-// Hàm khởi tạo SSD1306
-void ssd1306_init()
-{
-    for (size_t i = 0; i < sizeof(ssd1306_init_cmds); i++) {
-        ssd1306_send_command(ssd1306_init_cmds[i]);
-    }
-}
-
-
-// Hàm làm sạch màn hình SSD1306
-void ssd1306_clear()
-{
-    uint8_t buffer[SCREEN_WIDTH * SCREEN_HEIGHT / 8] = {0};
-    for (uint8_t page = 0; page < 8; page++) {
-        ssd1306_send_command(0xB0 + page); // Set Page Start Address
-        ssd1306_send_command(0x00);       // Set Lower Column Start Address
-        ssd1306_send_command(0x10);       // Set Higher Column Start Address
-        ssd1306_send_data(buffer, SCREEN_WIDTH);
-    }
-}
-
-
-// Hàm hiển thị chuỗi ký tự trên SSD1306
-void ssd1306_display_text(const char *text)
-{
-    // Ví dụ hiển thị dữ liệu cứng nhắc. Muốn mềm dẻo hơn cần thư viện GFX.
-    uint8_t text_data[SCREEN_WIDTH] = {0xFF, 0x81, 0x81, 0x81, 0xFF}; // Khung ký tự "A".
-    ssd1306_send_command(0xB0);  // Page Start Address
-    ssd1306_send_command(0x00);  // Lower Column Start Address
-    ssd1306_send_command(0x10);  // Higher Column Start Address
-    ssd1306_send_data(text_data, sizeof(text_data));
-}
-
-
 
 /*============================================================================================================================================================================
 Main Funsion
@@ -205,15 +145,15 @@ int main()
 
 
     // I2C Initialisation
-    // i2c_init(I2C_PORT, 400*1000);                   // 400Khz
-    
+    i2c_init(I2C_PORT, 400*1000);                   // 400Khz
     gpio_set_function(I2C_SDA, GPIO_FUNC_I2C);
     gpio_set_function(I2C_SCL, GPIO_FUNC_I2C);
     gpio_pull_up(I2C_SDA);
     gpio_pull_up(I2C_SCL);
     // https://github.com/raspberrypi/pico-examples/tree/master/i2c
 
-
+    // Initialize the SSD1306 display
+    init_display();
 
     
     
