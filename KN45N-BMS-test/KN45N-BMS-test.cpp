@@ -144,8 +144,6 @@ int main()
     gpio_pull_up(I2C_SCL);
     // https://github.com/raspberrypi/pico-examples/tree/master/i2c
 
-    // Initialize the SSD1306 display
-    init_display();
 
     
     
