@@ -28,9 +28,6 @@ CMake:		v3.31.4
 // #include    "SSD1306.h"
 
 
-//============================================================================================================================================================================
-
-
 
 /*============================================================================================================================================================================
 Defines     Var                             Val             Mô tả
@@ -82,7 +79,6 @@ Defines     Var                             Val             Mô tả
 #define     CMD_DEVICE_NAME                 0x21
 #define     CMD_SERIAL_NUMBER               0x1C
 #define     CMD_ALARM_CAPACITY              0x1A
-//============================================================================================================================================================================
 
 
 
@@ -116,8 +112,6 @@ const   char        serialNumber[]          = "0001";       // Số serial duy n
         uint8_t     currentCommand          = 0x00;         // Lưu lệnh hiện tại từ Motherboard IMB410TN        N/a
 // https://www.acpi.info/DOWNLOADS/ACPIspec50.pdf
 
-//============================================================================================================================================================================
-
 
 
 /*============================================================================================================================================================================
@@ -142,7 +136,7 @@ int main()
     }
 
 
-    // SPI initialisation
+    // // SPI initialisation
     // spi_init(SPI_PORT, 1000*1000);                  // 1MHz
     // gpio_set_function(PIN_MISO, GPIO_FUNC_SPI);
     // gpio_set_function(PIN_CS,   GPIO_FUNC_SIO);
@@ -154,21 +148,21 @@ int main()
     // https://github.com/raspberrypi/pico-examples/tree/master/spi
 
 
-    // I2C Initialisation
-    i2c_init(I2C_PORT, 400*1000);                   // 400Khz
-    gpio_set_function(I2C_SDA, GPIO_FUNC_I2C);
-    gpio_set_function(I2C_SCL, GPIO_FUNC_I2C);
-    gpio_pull_up(I2C_SDA);
-    gpio_pull_up(I2C_SCL);
+    // // I2C Initialisation
+    // i2c_init(I2C_PORT, 400*1000);                   // 400Khz
+    // gpio_set_function(I2C_SDA, GPIO_FUNC_I2C);
+    // gpio_set_function(I2C_SCL, GPIO_FUNC_I2C);
+    // gpio_pull_up(I2C_SDA);
+    // gpio_pull_up(I2C_SCL);
     // https://github.com/raspberrypi/pico-examples/tree/master/i2c
 
-    SSD1306 oled(i2c0);
-    oled.begin();
-    oled.clearDisplay();
+    // SSD1306 oled(i2c0);
+    // oled.begin();
+    // oled.clearDisplay();
 
-    // Hiển thị văn bản
-    oled.printText(0, 0, "Hello, OLED!", true);
-    oled.display();
+    // // Hiển thị văn bản
+    // oled.printText(0, 0, "Hello, OLED!", true);
+    // oled.display();
     
     
     
