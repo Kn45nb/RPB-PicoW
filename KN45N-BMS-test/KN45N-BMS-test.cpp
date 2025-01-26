@@ -10,22 +10,21 @@ CMake:		v3.31.4
 
 
 /*============================================================================================================================================================================
-#include    Lib 
+#include	Lib
 ============================================================================================================================================================================*/
-#include    <stdio.h>
-#include    <stdint.h>
+#include	<stdio.h>
+#include	<stdint.h>
 
 
 // SDK Pico
-#include    "pico/stdlib.h"
-#include    "hardware/spi.h"
-#include    "hardware/i2c.h"
-#include    "pico/cyw43_arch.h"
-#include    "hardware/uart.h"
-
+#include	"pico/stdlib.h"
+#include	"hardware/spi.h"
+#include	"hardware/i2c.h"
+#include	"pico/cyw43_arch.h"
+#include	"hardware/uart.h"
 
 // Other Lib
-// #include    "SSD1306.h"
+// #include	"SSD1306.h"
 
 
 
@@ -95,8 +94,8 @@ Const Type        Var                       Val                                 
         uint16_t    remainingCapacity       = 900;                                      // Dung lượng còn lại của pin                       mAh
         uint16_t    fullChargeCapacity      = 950;                                      // Dung lượng thực khi sạc đầy                      mAh
 const   uint16_t    designCapacity          = 1000;                                     // Dung lượng thiết kế của pin                      mAh
-        uint8_t     relativeSOC             = remainingCapacity/fullChargeCapacity;     // Dung lượng còn lại với dung lượng thực           %           =remainingCapacity/fullChargeCapacity (% pin)
-        uint8_t     absoluteSOC             = fullChargeCapacity/designCapacity;        // Dung lượng còn lại với dung lượng thiết kế       %           =fullChargeCapacity/designCapacity (Độ chai pin)
+        uint8_t     relativeSOC             = remainingCapacity/fullChargeCapacity;     // Dung lượng còn lại với dung lượng thực           %           (% pin)
+        uint8_t     absoluteSOC             = fullChargeCapacity/designCapacity;        // Dung lượng còn lại với dung lượng thiết kế       %           (% chai pin)
 
         uint16_t    avgTimeToEmpty          = 90;                                       // Thời gian trung bình cho đến khi pin cạn         Minutes     chỉ áp dụng khi đang dùng   | 
         uint16_t    avgTimeToFull           = 120;                                      // Thời gian trung bình để sạc đầy                  Minutes     Chỉ áp dụng khi đang sạc    |mạch sạc xả cùng chân
@@ -110,7 +109,6 @@ const   char        manufacturerName[]      = "Notebook";                       
 const   char        deviceName[]            = "BAT";                                    // Tên thiết bị pin                                 N/a
 const   char        serialNumber[]          = "0001";                                   // Số serial duy nhất của pin                       N/a
         uint8_t     currentCommand          = 0x00;                                     // Lưu lệnh hiện tại từ Motherboard IMB410TN        N/a
-// https://www.acpi.info/DOWNLOADS/ACPIspec50.pdf
 
 
 
