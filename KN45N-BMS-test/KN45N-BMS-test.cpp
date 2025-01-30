@@ -85,14 +85,17 @@ Defines     Var                             Val             Mô tả
 Const Type        Var                       Val                                         Mô tả                                               Đơn vị      Note
 ============================================================================================================================================================================*/
 // _BIF
-const   uint32_t    DESIGN_CAPACITY         = 0x186A0;                                  // Dung lượng thiết kế của pin                      mAh         max: 4294967295
-const   uint16_t    Des_Voltage             = 0x4A38;                                   // Điện áp thiết kế của pin                         mV          Basic voltage: 19V
+const   uint32_t    DESIGN_CAPACITY         = 0x186A0;                                  // Dung lượng thiết kế của pin                      mWh         max: 4294967295
+const   uint16_t    DESIGN_VOLTAGE          = 0x4A38;                                   // Điện áp thiết kế của pin                         mV          Basic voltage: 19V
 const   char        MANUFACTURER[]          = "Notebook";                               // Tên nhà sản xuất pin                             N/a         ex: "Notebook" same Laptop
 const   char        NAME[]                  = "BAT";                                    // Tên thiết bị pin                                 N/a         ex: "BAT" same Laptop        
 const   char        SERIAL_NUMBER[]         = "0001";                                   // Số serial duy nhất của pin                       N/a         ex: "0001" same Laptop
 const   char        CHEMISTRY[]             = "LION";                                   // Loại hóa học của pin                             N/a         ex: "Li-ion" same Laptop
 
 
+// _BST
+        uint32_t    CAPACITY_REMAINING      = 0x384;                                    // Dung lượng còn lại của pin                       mWh         max: 0x186A0
+        
 
 
 
