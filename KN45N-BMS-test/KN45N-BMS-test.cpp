@@ -82,49 +82,35 @@ Defines     Var                             Val             Mô tả
 
 
 /*============================================================================================================================================================================
-Const Type        Var                       Val                                         Mô tả                                               Đơn vị      Note
+Const Type        Var                           Val                     Mô tả                                               Đơn vị          Note
 ============================================================================================================================================================================*/
-// _BIF
-const   uint32_t    DESIGN_CAPACITY         = 0x186A0;                                  // Dung lượng thiết kế của pin                      mWh         max: 4294967295
-const   uint16_t    DESIGN_VOLTAGE          = 0x4A38;                                   // Điện áp thiết kế của pin                         mV          Basic voltage: 19V
-const   char        MANUFACTURER[]          = "Notebook";                               // Tên nhà sản xuất pin                             N/a         ex: "Notebook" same Laptop
-const   char        NAME[]                  = "BAT";                                    // Tên thiết bị pin                                 N/a         ex: "BAT" same Laptop        
-const   char        SERIAL_NUMBER[]         = "0001";                                   // Số serial duy nhất của pin                       N/a         ex: "0001" same Laptop
-const   char        CHEMISTRY[]             = "LION";                                   // Loại hóa học của pin                             N/a         ex: "Li-ion" same Laptop
+// _BIX
+const   uint8_t     REVISION                    = 0x1;                  // Version of the data structure _BIX               // N/a          // Basic: 0x1
+/*cont*/bool        POWER_UNIT                  = 0x1;                  // Bit Logic đơn vị                                 // N/a          // 0: mWh, 1: mAh
+const   uint32_t    DESIGN_CAPACITY             = 0x186A0;              // Dung lượng thiết kế của pin                      // POWER_UNIT   // max: 4294967295
+        uint32_t    LAST_FULL_CHARGE_CAPACITY   = 0x186A0;              // Dung lượng sạc đầy cuối cùng của pin             // POWER_UNIT   // max: DESIGN_CAPACITY
+const   bool        BATTERY_TECHNOLOGY          = 0x1;                  // Loại công nghệ pin (khả năng tái tạo)            // N/a          // 0: No, 1: Yes
+const   uint16_t    DESIGN_VOLTAGE              = 0x4A38;               // Điện áp thiết kế của pin                         // mV           // Basic voltage: 19V
+        uint32_t    DESIGN_CAPACITY_OF_WARNING  = 0x2710;               // Dung lượng cảnh báo thiết kế của pin             // POWER_UNIT   // max: LAST_FULL_CHARGE_CAPACITY
+        uint32_t    DESIGN_CAPACITY_OF_LOW      = 0x2710;               // Dung lượng thấp thiết kế của pin (hibernation)   // POWER_UNIT   // max: LAST_FULL_CHARGE_CAPACITY
+        uint8_t     CYCLE_COUNT                 = 0x0;                  // Số lần sạc của pin                              // N/a          // max: 255
+
+const   char        MANUFACTURER[]          = "Notebook";           // Tên nhà sản xuất pin                             // N/a          // Can change it
+const   char        NAME[]                  = "BAT";                // Tên thiết bị pin                                 // N/a          // Can change it
+const   char        SERIAL_NUMBER[]         = "0001";               // Số serial duy nhất của pin                       // N/a          // Can change it
+const   char        CHEMISTRY[]             = "LION";               // Loại hóa học của pin                             // N/a          // Can change it
 
 
 // _BST
-        uint32_t    CAPACITY_REMAINING      = 0x384;                                    // Dung lượng còn lại của pin                       mWh         max: 0x186A0
+        uint32_t    CAPACITY_REMAINING      = 0x384;                // Dung lượng còn lại của pin                       mWh         max: 0x186A0
+        uint16_t    VOLTAGE_PRESENT         = 0x4E20;               // Điện áp hiện tại của pin                         mV          Basic voltage: 19V out that is warning
+
+
+
+
         
-
-
-
-
-        uint16_t    batteryStatus           = 0x0004;                                   // Trạng thái pin                                   N/a         Bắt buộc
-                                                                                                                                            // 0x0001: Sạc
-                                                                                                                                            // 0x0002: Xả
-                                                                                                                                            // 0x0004: Full
-                                                                                                                                            // 0x0008: Low
-                                                                                                                                            // 0x0010: Error
-        uint16_t    alarmCapacity           = 500;                                      // Dung lượng ngưỡng cảnh báo pin yếu               mAh         = 10% fullChargeCapacity
-        uint16_t    remainingCapacity       = 900;                                      // Dung lượng còn lại của pin                       mAh
-        uint16_t    fullChargeCapacity      = 950;                                      // Dung lượng thực khi sạc đầy                      mAh
-const   uint16_t    designCapacity          = 1000;                                     // Dung lượng thiết kế của pin                      mAh
-        uint8_t     relativeSOC             = remainingCapacity/fullChargeCapacity;     // Dung lượng còn lại với dung lượng thực           %           (% pin)
-        uint8_t     absoluteSOC             = fullChargeCapacity/designCapacity;        // Dung lượng còn lại với dung lượng thiết kế       %           (% chai pin)
-
-        uint16_t    avgTimeToEmpty          = 90;                                       // Thời gian trung bình cho đến khi pin cạn         Minutes     chỉ áp dụng khi đang dùng   | 
-        uint16_t    avgTimeToFull           = 120;                                      // Thời gian trung bình để sạc đầy                  Minutes     Chỉ áp dụng khi đang sạc    |mạch sạc xả cùng chân
-        uint16_t    cycleCount              = 10;                                       // Số chu kỳ sạc-xả                                 Times
-        uint16_t    temperature             = 2980;                                     // Nhiệt độ hiện tại của pin                        Kelvin
-        uint16_t    voltage                 = 19000;                                    // Điện áp hiện tại của pin                         mV
-        int16_t     current                 = 7000;                                     // Dòng điện pin đang cấp hoặc nhận                 mA          Âm sạc, dương xả
-        uint16_t    chargingCurrent         = 2000;                                     // Dòng điện sạc hiện tại                           mA
-        uint16_t    chargingVoltage         = 12500;                                    // Điện áp sạc hiện tại                             mV
-const   char        manufacturerName[]      = "Notebook";                               // Tên nhà sản xuất pin                             N/a
-const   char        deviceName[]            = "BAT";                                    // Tên thiết bị pin                                 N/a
-const   char        serialNumber[]          = "0001";                                   // Số serial duy nhất của pin                       N/a
-        uint8_t     currentCommand          = 0x00;                                     // Lưu lệnh hiện tại từ Motherboard IMB410TN        N/a
+        
+        
 
 
 
