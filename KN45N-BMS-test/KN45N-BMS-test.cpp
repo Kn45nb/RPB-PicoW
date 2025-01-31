@@ -10,7 +10,7 @@ CMake:		v3.31.4
 
 
 /*============================================================================================================================================================================
-#include	Lib
+Include	Lib
 ============================================================================================================================================================================*/
 #include	<stdio.h>
 #include	<stdint.h>
@@ -32,11 +32,11 @@ CMake:		v3.31.4
 Defines     Var                             Val             Mô tả
 ============================================================================================================================================================================*/
 // SPI defines
-// #define     SPI_PORT                        spi0
-// #define     PIN_MISO                        16
-// #define     PIN_CS                          17
-// #define     PIN_SCK                         18
-// #define     PIN_MOSI                        19
+#define     SPI_PORT                        spi0
+#define     PIN_MISO                        16
+#define     PIN_CS                          17
+#define     PIN_SCK                         18
+#define     PIN_MOSI                        19
 
 
 // I2C defines
@@ -51,12 +51,12 @@ Defines     Var                             Val             Mô tả
 
 
 
-// UART defines (default UART 'uart0')
-#define     UART_ID                         uart1
-#define     BAUD_RATE                       115200
-// PIN
-#define     UART_TX_PIN                     4
-#define     UART_RX_PIN                     5
+// // UART defines (default UART 'uart0')
+// #define     UART_ID                         uart1
+// #define     BAUD_RATE                       115200
+// // PIN
+// #define     UART_TX_PIN                     4
+// #define     UART_RX_PIN                     5
 
 
 
@@ -64,7 +64,7 @@ Defines     Var                             Val             Mô tả
 /*============================================================================================================================================================================
 Const Type        Var                           Val                     Mô tả                                               Đơn vị          Note
 ============================================================================================================================================================================*/
-// _BIX
+// _BIX                                                                                                                                     // Same as _BIF old version
 const   uint8_t     REVISION                    = 0x1;                  // Version of the data structure _BIX               // N/a          // Basic: 0x1
 /*cont*/bool        POWER_UNIT                  = 0x1;                  // Bit Logic đơn vị                                 // N/a          // 0: mWh, 1: mAh
 const   uint32_t    DESIGN_CAPACITY             = 0x186A0;              // Dung lượng thiết kế của pin                      // POWER_UNIT   // max: 4294967295
