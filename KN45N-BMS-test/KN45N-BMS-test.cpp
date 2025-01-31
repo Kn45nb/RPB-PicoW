@@ -64,7 +64,7 @@ Defines     Var                             Val             Mô tả
 /*============================================================================================================================================================================
 Const Type        Var                           Val                     Mô tả                                               Đơn vị          Note
 ============================================================================================================================================================================*/
-// _BIX                                                                                                                                     // Same as _BIF old version
+// Package: _BIX
 const   uint8_t     REVISION                    = 0x1;                  // Version of the data structure _BIX               // N/a          // Basic: 0x1
 /*cont*/bool        POWER_UNIT                  = 0x1;                  // Bit Logic đơn vị                                 // N/a          // 0: mWh, 1: mAh
 const   uint32_t    DESIGN_CAPACITY             = 0x186A0;              // Dung lượng thiết kế của pin                      // POWER_UNIT   // max: 4294967295
@@ -87,15 +87,18 @@ const   char        BATTEY_TYPE[]               = "LION";               // Loạ
 const   char        OEM_INFORMATION[]           = "MAKE BY @Kn45nb";    // Thông tin OEM                                    // N/a          //
 
 
-// _BST
-        uint8_t     BATTERY_STATE               = 0x4;                  // Trạng thái pin                                   // N/a          // 0x0001: Sạc
-                                                                                                                                            // 0x0002: Xả
-                                                                                                                                            // 0x0004: Full
-                                                                                                                                            // 0x0008: Low
+// Package: _BST
+        uint8_t     BATTERY_STATE               = 0x4;                  // Trạng thái pin                                   // N/a          // 0x0001: Charging
+                                                                                                                                            // 0x0002: Discharging 
+                                                                                                                                            // 0x0004: Low
+                                                                                                                                            // 0x0008: Full
                                                                                                                                             // 0x0010: Error
         int16_t     BATTERY_PRESENT_RATE        = 0x0;                  // Tốc độ Sạc/xả (Điện áp giữa 2 đầu nguồn điện)    // POWER_UNIT   // Âm sạc, dương xả
         uint32_t    BATTEY_REMAINING_CAPACITY   = 0x0;                  // Dung lượng còn lại của pin                       // POWER_UNIT   // max: DESIGN_CAPACITY
         uint16_t    BATTERY_VOLTAGE             = 0x4A38;               // Điện áp hiện tại của pin                         // mV           // Basic voltage: 19V
+
+
+// Package: _BIF (old version for Legacy. don't carefull that 🥲)
 
 
 
@@ -179,3 +182,6 @@ int main()
         sleep_ms(1000);
     }
 }
+
+// Note:
+// Có thể sử dụng các công cụ như Microsoft ASL Compiler để kiểm tra tính tuân thủ của các bảng ACPI.
