@@ -96,21 +96,20 @@ const   char        OEM_INFORMATION[]           = "MAKE BY @Kn45nb";    // Thôn
         int16_t     BATTERY_PRESENT_RATE        = 0x0;                  // Tốc độ Sạc/xả (Điện áp giữa 2 đầu nguồn điện)    // POWER_UNIT   // Âm sạc, dương xả
         uint32_t    BATTEY_REMAINING_CAPACITY   = 0x0;                  // Dung lượng còn lại của pin                       // POWER_UNIT   // max: DESIGN_CAPACITY
         uint16_t    BATTERY_VOLTAGE             = 0x4A38;               // Điện áp hiện tại của pin                         // mV           // Basic voltage: 19V
-
-
 // Note: Có thể sử dụng các công cụ như Microsoft ASL Compiler để kiểm tra tính tuân thủ của các bảng ACPI. @Kn45nb
-// https://docs.microsoft.com/en-us/windows-hardware/drivers/acpi/acpi-source-language-asl-compiler
+
 
 // Package: _BIF (old version for Legacy. Don't carefull that 🥲)
 
 
-// Package: _BTP
+// Package: _BTP (Checkpoint charging using cơ chế Điểm ngắt pin. Cần dùng trong powercfg/batteryreport @Kn45nb)
 
 
-// Package: _BMA
+// Package: _SUN (Option: Số đơn vị khe cắm hoặc chơi thứ tự pin thì không cần @Kn45nb)
 
 
-// Package: _DSM
+// Package: _STA (Sau làm Funsion Shutdows PSU/PIN thì mới động tới @Kn45nb)
+
 
 
 /*============================================================================================================================================================================
