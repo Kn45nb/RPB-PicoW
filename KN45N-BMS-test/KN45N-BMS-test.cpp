@@ -94,15 +94,35 @@ const   uint16_t    DESIGN_VOLTAGE              = 0x4A38;               // Đi�
         uint32_t    DESIGN_CAPACITY_OF_WARNING  = 0x2710;               // Dung lượng cảnh báo thiết kế của pin             // POWER_UNIT   // max: LAST_FULL_CHARGE_CAPACITY
         uint32_t    DESIGN_CAPACITY_OF_LOW      = 0x2710;               // Dung lượng thấp thiết kế của pin (hibernation)   // POWER_UNIT   // max: LAST_FULL_CHARGE_CAPACITY
         uint8_t     CYCLE_COUNT                 = 0x0;                  // Số lần sạc của pin                               // Times        // max: 255
-/*cont*/uint32_t     MEASUREMENT_ACCURACY       = 0x1;                  // Độ chính xác đo lường                            // PPM          // @Kn45nb Cần tối ưu đoạn này
-
-
+/*cont*/uint32_t    MEASUREMENT_ACCURACY        = 0x1;                  // Độ chính xác đo lường                            // PPM          // @Kn45nb Cần tối ưu đoạn này
+/*cont*/uint16_t    MAX_SAMPLING_TIME           = 0x1;                  // Thời gian lấy mẫu tối đa                         // ms           // 
+/*cont*/uint16_t    MIN_SAMPLING_TIME           = 0x1;                  // Thời gian lấy mẫu tối thiểu                      // ms           //
+const   uint16_t    MAX_OUTPUT_VOLTAGE          = 0x4E20;               // Điện áp đầu ra tối đa                            // mV           // Basic voltage: 19V
+const   uint8_t     MEASUREMENT_GRANULARITY     = 0x1;                  // Độ tinh mịch (phân giải) đo lường                // N/a          //
+const   uint8_t     CAPACITY_GRANULARITY_1      = 0x1;                  // Độ tinh mịch (phân giải) dung lượng trên ngưỡng  // POWER_UNIT   //
+const   uint8_t     CAPACITY_GRANULARITY_2      = 0x1;                  // Độ tinh mịch (phân giải) dung lượng dưới ngưỡng  // POWER_UNIT   //
+const   char        MODEL_NUMBER[]              = "Notebook";           // Mã số model của pin                              // N/a          //
+const   char        SERIAL_NUMBER[]             = "0001";               // Số serial duy nhất của pin                       // N/a          //
+const   char        BATTEY_TYPE[]               = "LION";               // Loại pin                                         // N/a          //
+const   char        OEM_INFORMATION[]           = "MAKE BY @Kn45nb";    // Thông tin OEM                                    // N/a          //
 
 
 // _BST
-        uint32_t    CAPACITY_REMAINING      = 0x384;                // Dung lượng còn lại của pin                       mWh         max: 0x186A0
-        uint16_t    VOLTAGE_PRESENT         = 0x4E20;               // Điện áp hiện tại của pin                         mV          Basic voltage: 19V out that is warning
+        uint8_t     BATTERY_STATE               = 0x4;                  // Trạng thái pin                                   // N/a          // 0x0001: Sạc
+                                                                                                                                            // 0x0002: Xả
+                                                                                                                                            // 0x0004: Full
+                                                                                                                                            // 0x0008: Low
+                                                                                                                                            // 0x0010: Error
+        int16_t     BATTERY_PRESENT_RATE        = 0x0;                  // Tốc độ Sạc/xả (Điện áp giữa 2 đầu nguồn điện)    // POWER_UNIT   // Âm sạc, dương xả
         
+
+
+
+
+
+
+
+
 
 
 // OLD_ACPI
