@@ -65,14 +65,14 @@ Defines     Var                             Val             Mô tả
 Const Type        Var                           Val                     Mô tả                                               Đơn vị          Note
 ============================================================================================================================================================================*/
 // Package: _BIX
-const   uint8_t     REVISION                    = 0x1;                  // Version of the data structure _BIX               // N/a          // Basic: 0x1
-/*cont*/bool        POWER_UNIT                  = 0x1;                  // Bit Logic đơn vị                                 // N/a          // 0: mWh, 1: mAh
-const   uint32_t    DESIGN_CAPACITY             = 0x186A0;              // Dung lượng thiết kế của pin                      // POWER_UNIT   // max: 4294967295
-        uint32_t    LAST_FULL_CHARGE_CAPACITY   = 0x186A0;              // Dung lượng sạc đầy cuối cùng của pin             // POWER_UNIT   // max: DESIGN_CAPACITY
-const   bool        BATTERY_TECHNOLOGY          = 0x1;                  // Loại công nghệ pin (khả năng tái tạo)            // N/a          // 0: No, 1: Yes
-const   uint16_t    DESIGN_VOLTAGE              = 0x4A38;               // Điện áp thiết kế của pin                         // mV           // Basic voltage: 19V
-        uint32_t    DESIGN_CAPACITY_OF_WARNING  = 0x2710;               // Dung lượng cảnh báo thiết kế của pin             // POWER_UNIT   // max: LAST_FULL_CHARGE_CAPACITY
-        uint32_t    DESIGN_CAPACITY_OF_LOW      = 0x2710;               // Dung lượng thấp thiết kế của pin (hibernation)   // POWER_UNIT   // max: LAST_FULL_CHARGE_CAPACITY
+const   uint8_t     REVISION                    = 0x0;                  // Version of the data structure _BIX               // N/a          // Basic: 0x0 (?const)
+const   bool        POWER_UNIT                  = 0x1;                  // Biến giá trị đơn vị                              // N/a          // 0: mWh, 1: mAh
+const   uint32_t    DESIGN_CAPACITY             = 0x186A0;              // Dung lượng thiết kế của pin                      // POWER_UNIT   // !set: 0x0 || 0xFFFFFFFF
+        uint32_t    LAST_FULL_CHARGE_CAPACITY   = 0x186A0;              // Dung lượng sạc đầy cuối cùng của pin             // POWER_UNIT   // !set: 0x0 || 0xFFFFFFFF, max: DESIGN_CAPACITY, @Kn45nb Cần một bộ logic++, khởi tạo là số gốc xong trừ dần đi.
+const   bool        BATTERY_TECHNOLOGY          = 0x1;                  // Công nghệ tái tạo pin (khả năng sạc)             // N/a          // 0: No, 1: Yes
+const   uint16_t    DESIGN_VOLTAGE              = 0x4A38;               // Điện áp thiết kế của pin                         // mV           // !set: 0x0 || 0xFFFFFFFF, Basic voltage: 19V
+        uint32_t    DESIGN_CAPACITY_OF_WARNING  = 0x2710;               // Dung lượng cảnh báo thiết kế của pin             // POWER_UNIT   // Windows ignores this value (Nhưng Bios thì rất hay đọc)
+        uint32_t    DESIGN_CAPACITY_OF_LOW      = 0x1388;               // Dung lượng thấp thiết kế của pin (hibernation)   // POWER_UNIT   // 0-5% of LAST_FULL_CHARGE_CAPACITY, @Kn45nb Cần fun hoặc logic cập nhật sau khi update LAST_FULL_CHARGE_CAPACITY
         uint8_t     CYCLE_COUNT                 = 0x0;                  // Số lần sạc của pin                               // Times        // max: 255
 /*cont*/uint32_t    MEASUREMENT_ACCURACY        = 0x1;                  // Độ chính xác đo lường                            // PPM          // @Kn45nb Cần tối ưu đoạn này
 /*cont*/uint16_t    MAX_SAMPLING_TIME           = 0x1;                  // Thời gian lấy mẫu tối đa                         // ms           // 
