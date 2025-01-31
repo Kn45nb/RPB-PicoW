@@ -98,7 +98,8 @@ const   char        OEM_INFORMATION[]           = "MAKE BY @Kn45nb";    // Thôn
         uint16_t    BATTERY_VOLTAGE             = 0x4A38;               // Điện áp hiện tại của pin                         // mV           // Basic voltage: 19V
 
 
-// Package: _BIF (old version for Legacy. don't carefull that 🥲)
+// Package: _BIF (old version for Legacy. Don't carefull that 🥲)
+// Note: Có thể sử dụng các công cụ như Microsoft ASL Compiler để kiểm tra tính tuân thủ của các bảng ACPI. @Kn45nb
 
 
 
@@ -182,6 +183,3 @@ int main()
         sleep_ms(1000);
     }
 }
-
-// Note:
-// Có thể sử dụng các công cụ như Microsoft ASL Compiler để kiểm tra tính tuân thủ của các bảng ACPI.
