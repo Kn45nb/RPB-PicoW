@@ -94,7 +94,7 @@ const   uint16_t    DESIGN_VOLTAGE              = 0x4A38;               // Đi�
         uint32_t    DESIGN_CAPACITY_OF_WARNING  = 0x2710;               // Dung lượng cảnh báo thiết kế của pin             // POWER_UNIT   // max: LAST_FULL_CHARGE_CAPACITY
         uint32_t    DESIGN_CAPACITY_OF_LOW      = 0x2710;               // Dung lượng thấp thiết kế của pin (hibernation)   // POWER_UNIT   // max: LAST_FULL_CHARGE_CAPACITY
         uint8_t     CYCLE_COUNT                 = 0x0;                  // Số lần sạc của pin                               // Times        // max: 255
-/*cont*/uint8_t     MEASUREMENT_ACCURACY        = 0x1;                  // Độ chính xác đo lường                            // PPM          // 0: 1%, 1: 0.1%
+/*cont*/uint32_t     MEASUREMENT_ACCURACY        = 0x1;                  // Độ chính xác đo lường                           // PPM          // 0: 1%, 1: 0.1% @Kn45nb Cần tối ưu đoạn này
 
 
 const   char        MANUFACTURER[]          = "Notebook";           // Tên nhà sản xuất pin                             // N/a          // Can change it
