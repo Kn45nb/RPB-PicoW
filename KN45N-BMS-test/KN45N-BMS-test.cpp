@@ -93,7 +93,7 @@ const   bool        BATTERY_TECHNOLOGY          = 0x1;                  // Loạ
 const   uint16_t    DESIGN_VOLTAGE              = 0x4A38;               // Điện áp thiết kế của pin                         // mV           // Basic voltage: 19V
         uint32_t    DESIGN_CAPACITY_OF_WARNING  = 0x2710;               // Dung lượng cảnh báo thiết kế của pin             // POWER_UNIT   // max: LAST_FULL_CHARGE_CAPACITY
         uint32_t    DESIGN_CAPACITY_OF_LOW      = 0x2710;               // Dung lượng thấp thiết kế của pin (hibernation)   // POWER_UNIT   // max: LAST_FULL_CHARGE_CAPACITY
-        uint8_t     CYCLE_COUNT                 = 0x0;                  // Số lần sạc của pin                              // N/a          // max: 255
+        uint8_t     CYCLE_COUNT                 = 0x0;                  // Số lần sạc của pin                               // Times        // max: 255
 
 const   char        MANUFACTURER[]          = "Notebook";           // Tên nhà sản xuất pin                             // N/a          // Can change it
 const   char        NAME[]                  = "BAT";                // Tên thiết bị pin                                 // N/a          // Can change it
