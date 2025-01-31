@@ -97,7 +97,7 @@ const   uint16_t    DESIGN_VOLTAGE              = 0x4A38;               // Đi�
 /*cont*/uint32_t    MEASUREMENT_ACCURACY        = 0x1;                  // Độ chính xác đo lường                            // PPM          // @Kn45nb Cần tối ưu đoạn này
 /*cont*/uint16_t    MAX_SAMPLING_TIME           = 0x1;                  // Thời gian lấy mẫu tối đa                         // ms           // 
 /*cont*/uint16_t    MIN_SAMPLING_TIME           = 0x1;                  // Thời gian lấy mẫu tối thiểu                      // ms           //
-const   uint16_t    MAX_OUTPUT_VOLTAGE          = 0x4E20;               // Điện áp đầu ra tối đa                            // mV           // Basic voltage: 19V
+const   uint16_t    MAX_OUTPUT_VOLTAGE          = 0x4A38;               // Điện áp đầu ra tối đa                            // mV           // Basic voltage: 19V
 const   uint8_t     MEASUREMENT_GRANULARITY     = 0x1;                  // Độ tinh mịch (phân giải) đo lường                // N/a          //
 const   uint8_t     CAPACITY_GRANULARITY_1      = 0x1;                  // Độ tinh mịch (phân giải) dung lượng trên ngưỡng  // POWER_UNIT   //
 const   uint8_t     CAPACITY_GRANULARITY_2      = 0x1;                  // Độ tinh mịch (phân giải) dung lượng dưới ngưỡng  // POWER_UNIT   //
@@ -114,42 +114,8 @@ const   char        OEM_INFORMATION[]           = "MAKE BY @Kn45nb";    // Thôn
                                                                                                                                             // 0x0008: Low
                                                                                                                                             // 0x0010: Error
         int16_t     BATTERY_PRESENT_RATE        = 0x0;                  // Tốc độ Sạc/xả (Điện áp giữa 2 đầu nguồn điện)    // POWER_UNIT   // Âm sạc, dương xả
-        
-
-
-
-
-
-
-
-
-
-
-// OLD_ACPI
-//         uint16_t    batteryStatus           = 0x0004;       // Trạng thái pin                                   N/a         Bắt buộc
-//                                                                                                                             // 0x0001: Sạc
-//                                                                                                                             // 0x0002: Xả
-//                                                                                                                             // 0x0004: Full
-//                                                                                                                             // 0x0008: Low
-//                                                                                                                             // 0x0010: Error
-//         uint16_t    remainingCapacity       = 900;          // Dung lượng còn lại của pin                       mAh
-//         uint16_t    voltage                 = 19000;        // Điện áp hiện tại của pin                         mV
-//         uint16_t    current                 = 7000;         // Dòng điện pin đang cấp hoặc nhận                 mA          Âm sạc, dương xả
-// const   uint16_t    designCapacity          = 1000;         // Dung lượng thiết kế của pin                      mAh         Không đổi trong vòng đời Cell
-//         uint16_t    fullChargeCapacity      = 950;          // Dung lượng thực khi sạc đầy                      mAh         
-//         uint16_t    cycleCount              = 10;           // Số chu kỳ sạc-xả                                 Times
-//         uint16_t    temperature             = 2980;         // Nhiệt độ hiện tại của pin                        Kelvin
-//         uint8_t     relativeSOC             = 75;           // Dung lượng còn lại với dung lượng thực           %           =remainingCapacity/fullChargeCapacity to 8bit
-//         uint8_t     absoluteSOC             = 70;           // Dung lượng còn lại với dung lượng thiết kế       %           =remainingCapacity/designCapacity to 8 bit
-//         uint16_t    avgTimeToEmpty          = 90;           // Thời gian trung bình cho đến khi pin cạn         Minutes     chỉ áp dụng khi đang dùng   |
-//         uint16_t    avgTimeToFull           = 120;          // Thời gian trung bình để sạc đầy                  Minutes     Chỉ áp dụng khi đang sạc    |mạch sạc xả cùng chân
-//         uint16_t    chargingCurrent         = 2000;         // Dòng điện sạc hiện tại                           mA
-//         uint16_t    chargingVoltage         = 12500;        // Điện áp sạc hiện tại                             mV
-// const   char        manufacturerName[]      = "Notebook";   // Tên nhà sản xuất pin                             N/a
-// const   char        deviceName[]            = "BAT";        // Tên thiết bị pin                                 N/a
-// const   char        serialNumber[]          = "0001";       // Số serial duy nhất của pin                       N/a
-//         uint16_t    alarmCapacity           = 500;          // Dung lượng ngưỡng cảnh báo pin yếu               mAh         Tùy thuộc vào Cell
-//         uint8_t     currentCommand          = 0x00;         // Lưu lệnh hiện tại từ Motherboard IMB410TN        N/a
+        uint32_t    BATTEY_REMAINING_CAPACITY   = 0x0;                  // Dung lượng còn lại của pin                       // POWER_UNIT   // max: DESIGN_CAPACITY
+        uint16_t    BATTERY_VOLTAGE             = 0x4A38;               // Điện áp hiện tại của pin                         // mV           // Basic voltage: 19V
 
 
 
