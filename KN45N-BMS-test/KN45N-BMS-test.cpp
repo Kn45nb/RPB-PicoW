@@ -74,8 +74,8 @@ const   uint16_t    DESIGN_VOLTAGE              = 0x4A38;               // Đi�
         uint32_t    DESIGN_CAPACITY_OF_WARNING  = 0x2710;               // Dung lượng cảnh báo thiết kế của pin             // POWER_UNIT   // Windows ignores this value (Nhưng Bios thì rất hay đọc)
         uint32_t    DESIGN_CAPACITY_OF_LOW      = 0x1388;               // Dung lượng thấp thiết kế của pin (hibernation)   // POWER_UNIT   // 0-5% of LAST_FULL_CHARGE_CAPACITY, @Kn45nb Cần fun hoặc logic cập nhật sau khi update LAST_FULL_CHARGE_CAPACITY
         uint8_t     CYCLE_COUNT                 = 0x0;                  // Số lần sạc của pin                               // Times        // max: 255
-/*cont*/uint32_t    MEASUREMENT_ACCURACY        = 0x1;                  // Độ chính xác đo lường                            // PPM          // @Kn45nb Cần tối ưu đoạn này
-/*cont*/uint16_t    MAX_SAMPLING_TIME           = 0x1;                  // Thời gian lấy mẫu tối đa                         // ms           // 
+/*cont*/uint32_t    MEASUREMENT_ACCURACY        = 0x1;                  // Độ chính xác đo lường                            // PPM          // <=1% of DESIGN_CAPACITY
+/*cont*/uint16_t    MAX_SAMPLING_TIME           = 0x1;                  // Thời gian lấy mẫu tối đa                         // ms           // <=75mW 
 /*cont*/uint16_t    MIN_SAMPLING_TIME           = 0x1;                  // Thời gian lấy mẫu tối thiểu                      // ms           //
 const   uint16_t    MAX_OUTPUT_VOLTAGE          = 0x4A38;               // Điện áp đầu ra tối đa                            // mV           // Basic voltage: 19V
 const   uint8_t     MEASUREMENT_GRANULARITY     = 0x1;                  // Độ tinh mịch (phân giải) đo lường                // N/a          //
