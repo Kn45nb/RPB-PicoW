@@ -90,7 +90,7 @@ const   char        OEM_INFORMATION[]           = "MAKE BY @Kn45nb";    // Thôn
 // Package: _BST
         uint8_t     BATTERY_STATE               = 0x1;                  // Trạng thái pin                                   // N/a          // 0x0000: Charging, 0x0001: Discharging, ...
         int16_t     BATTERY_PRESENT_RATE        = 0x1;                  // Tốc độ Sạc/xả (Điện áp giữa 2 đầu nguồn điện)    // POWER_UNIT   // !set: 0x0 || 0xFFFFFFFF, (Âm sạc, dương xả) @Kn45nb $Do that
-        uint32_t    BATTEY_REMAINING_CAPACITY   = 0x0;                  // Dung lượng còn lại của pin                       // POWER_UNIT   // !set: 0x0 || 0xFFFFFFFF
+        uint32_t    BATTEY_REMAINING_CAPACITY   = 0x1;                  // Dung lượng còn lại của pin                       // POWER_UNIT   // !set: 0x0 || 0xFFFFFFFF
         uint16_t    BATTERY_VOLTAGE             = 0x4A38;               // Điện áp hiện tại của pin                         // mV           // 
 // Note: Có thể sử dụng các công cụ như Microsoft ASL Compiler để kiểm tra tính tuân thủ của các bảng ACPI. @Kn45nb
 
