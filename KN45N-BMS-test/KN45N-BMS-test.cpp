@@ -179,14 +179,14 @@ int main()
     // Example SMBus communication with mainboard (Master)
     
     // Read data from the mainboard
-    int result = i2c_read_blocking(I2C_PORT_0, 0x5A, CMD, 2, false); // 0x5A is the I2C address of the mainboard
-    if (result < 0) {
-        printf("SMBus read failed\n");
-    } else {
-        CMD = CMD; // Store the received command in CMD
-        printf("Received command: 0x%02X\n", CMD);
-        printf("Received data: 0x%02X\n", CMD);
-    }
+    // int result = i2c_read_blocking(I2C_PORT_0, 0x5A, CMD, 2, false); // 0x5A is the I2C address of the mainboard
+    // if (result < 0) {
+    //     printf("SMBus read failed\n");
+    // } else {
+    //     CMD = CMD; // Store the received command in CMD
+    //     printf("Received command: 0x%02X\n", CMD);
+    //     printf("Received data: 0x%02X\n", CMD);
+    // }
 
     // https://github.com/raspberrypi/pico-examples/tree/master/i2c
 
