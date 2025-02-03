@@ -19,6 +19,7 @@ Include	Lib
 // SDK Pico
 #include	"pico/stdlib.h"
 #include	"hardware/spi.h"
+
 #include	"hardware/i2c.h"
 #include	"pico/cyw43_arch.h"
 #include	"hardware/uart.h"
@@ -118,18 +119,18 @@ Methor
 // Method: _BIX
 void _BIX()
 {
-    // Package: _BIX
-    switch ()
-    {
-    case constant expression:
-        {
+    // // Package: _BIX
+    // switch ()
+    // {
+    // case constant expression:
+    //     {
 
-        }
-        break;
+    //     }
+    //     break;
     
-    default:
-        break;
-    }
+    // default:
+    //     break;
+    // }
 }
 
 
@@ -176,33 +177,19 @@ int main()
     gpio_pull_up(I2C_SCL);
 
     // Example SMBus communication with mainboard (Master)
-    uint8_t smbus_data[2];
-    smbus_data[0] = 0x00; // Command or register address
-    smbus_data[1] = 0xFF; // Data to send
-
-    // Write data to the mainboard
-    int result = i2c_write_blocking(I2C_PORT_0, 0x5A, smbus_data, 2, false); // 0x5A is the I2C address of the mainboard
+    
+    // Read data from the mainboard
+    int result = i2c_read_blocking(I2C_PORT_0, 0x5A, CMD, 2, false); // 0x5A is the I2C address of the mainboard
     if (result < 0) {
-        printf("SMBus write failed\n");
+        printf("SMBus read failed\n");
     } else {
-        printf("SMBus write successful\n");
+        CMD = CMD; // Store the received command in CMD
+        printf("Received command: 0x%02X\n", CMD);
+        printf("Received data: 0x%02X\n", CMD);
     }
 
-    // I2C Initialisation
-    // i2c_init(I2C_PORT, 400*1000);                   // 400Khz
-    // gpio_set_function(I2C_SDA, GPIO_FUNC_I2C);
-    // gpio_set_function(I2C_SCL, GPIO_FUNC_I2C);
-    // gpio_pull_up(I2C_SDA);
-    // gpio_pull_up(I2C_SCL);
     // https://github.com/raspberrypi/pico-examples/tree/master/i2c
 
-    // SSD1306 oled(i2c0);
-    // oled.begin();
-    // oled.clearDisplay();
-
-    // // Hiển thị văn bản
-    // oled.printText(0, 0, "Hello, OLED!", true);
-    // oled.display();
     
     
     
