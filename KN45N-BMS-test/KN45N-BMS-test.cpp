@@ -66,7 +66,7 @@ Const Type        Var                           Val                     Mô tả
 ============================================================================================================================================================================*/
 // Package: _BIX
 const   uint8_t     REVISION                    = 0x0;                  // Version of the data structure _BIX               // N/a          // Basic: 0x0 (?const)
-const   bool        POWER_UNIT                  = 0x1;                  // Biến giá trị đơn vị                              // N/a          // 0: mWh, 1: mAh
+const   bool        POWER_UNIT                  = 0x0;                  // Biến giá trị đơn vị                              // N/a          // 0: mWh, 1: mAh
 const   uint32_t    DESIGN_CAPACITY             = 0x186A0;              // Dung lượng thiết kế của pin                      // POWER_UNIT   // !set: 0x0 || 0xFFFFFFFF
         uint32_t    LAST_FULL_CHARGE_CAPACITY   = 0x186A0;              // Dung lượng sạc đầy cuối cùng của pin             // POWER_UNIT   // !set: 0x0 || 0xFFFFFFFF, max: DESIGN_CAPACITY, @Kn45nb Cần một bộ logic i++, khởi tạo là DESIGN_CAPACITY trừ dần mỗi lần time full.
 const   bool        BATTERY_TECHNOLOGY          = 0x1;                  // Công nghệ tái tạo pin (khả năng sạc)             // N/a          // 0: No, 1: Yes
@@ -84,7 +84,7 @@ const   uint8_t     CAPACITY_GRANULARITY_2      = 0x1;                  // Độ
 const   char        MODEL_NUMBER[]              = "Notebook";           // Mã số model của pin                              // N/a          // !NULL
 const   char        SERIAL_NUMBER[]             = "0001";               // Số serial duy nhất của pin                       // N/a          // !NULL
 const   char        BATTEY_TYPE[]               = "LION";               // Loại pin                                         // N/a          //
-const   char        OEM_INFORMATION[]           = "MAKE BY @Kn45nb";    // Thông tin OEM                                    // N/a          // Xạo lol ở đây thôi, không cần quan tâm @Kn45nb
+const   char        OEM_INFORMATION[]           = "MAKE BY @Kn45nb";    // Thông tin OEM                                    // N/a          //
 
 
 // Package: _BST
