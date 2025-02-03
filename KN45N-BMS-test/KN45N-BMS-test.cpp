@@ -64,6 +64,10 @@ Defines     Var                             Val             Mô tả
 /*============================================================================================================================================================================
 Const   Type        Var                           Val                     Mô tả                                               Đơn vị          Note
 ============================================================================================================================================================================*/
+// Commant of Master
+        uint32_t    CMD                         = 0x0;                  // Command of Master                                 // N/a          //
+
+
 // Package: _BIX
 const   uint32_t    REVISION                    = 0x0;                  // Version of the data structure _BIX               // N/a          // Basic: 0x0 (?const)
 const   uint32_t    POWER_UNIT                  = 0x0;                  // Biến giá trị đơn vị                              // N/a          // 0: mWh, 1: mAh
@@ -119,7 +123,7 @@ void _BIX()
     {
     case constant expression:
         {
-            
+
         }
         break;
     
