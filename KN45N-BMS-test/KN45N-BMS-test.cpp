@@ -154,6 +154,26 @@ int main()
     // https://github.com/raspberrypi/pico-examples/tree/master/spi
 
 
+    // I2C Initialisation for SMBus communication
+    i2c_init(I2C_PORT_0, 100*1000); // 100kHz for SMBus
+    gpio_set_function(I2C_SDA, GPIO_FUNC_I2C);
+    gpio_set_function(I2C_SCL, GPIO_FUNC_I2C);
+    gpio_pull_up(I2C_SDA);
+    gpio_pull_up(I2C_SCL);
+
+    // Example SMBus communication with mainboard (Master)
+    uint8_t smbus_data[2];
+    smbus_data[0] = 0x00; // Command or register address
+    smbus_data[1] = 0xFF; // Data to send
+
+    // Write data to the mainboard
+    int result = i2c_write_blocking(I2C_PORT_0, 0x5A, smbus_data, 2, false); // 0x5A is the I2C address of the mainboard
+    if (result < 0) {
+        printf("SMBus write failed\n");
+    } else {
+        printf("SMBus write successful\n");
+    }
+
     // I2C Initialisation
     // i2c_init(I2C_PORT, 400*1000);                   // 400Khz
     // gpio_set_function(I2C_SDA, GPIO_FUNC_I2C);
