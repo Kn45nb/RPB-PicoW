@@ -18,10 +18,17 @@ Include	Lib
 
 // SDK Pico
 #include	"pico/stdlib.h"
+
+// SPI
 #include	"hardware/spi.h"
 
+// I2C
 #include	"hardware/i2c.h"
+
+// Wiless 
 #include	"pico/cyw43_arch.h"
+
+// UART
 #include	"hardware/uart.h"
 
 // Other Lib
