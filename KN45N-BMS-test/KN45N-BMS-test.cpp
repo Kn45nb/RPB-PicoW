@@ -115,7 +115,17 @@ Methor
 void _BIX()
 {
     // Package: _BIX
+    switch ()
+    {
+    case constant expression:
+        {
+            
+        }
+        break;
     
+    default:
+        break;
+    }
 }
 
 
