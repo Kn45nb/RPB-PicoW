@@ -12,6 +12,7 @@ CMake:		v3.31.4
 /*============================================================================================================================================================================
 Include	Lib
 ============================================================================================================================================================================*/
+// Base
 #include	<stdio.h>
 #include	<stdint.h>
 
@@ -51,6 +52,7 @@ Defines     Var                             Val             Mô tả
 #define     I2C_PORT_0                      i2c0
 #define     I2C_SDA                         8
 #define     I2C_SCL                         9
+#define     I2C_SLAVE_ADDR                  0x0B            // Điều chỉnh Address sau @Kn45nb
 
 // I2C_1 defines
 #define     I2C_PORT_1                      i2c1
@@ -126,18 +128,7 @@ Methor
 // Method: _BIX
 void _BIX()
 {
-    // // Package: _BIX
-    // switch ()
-    // {
-    // case constant expression:
-    //     {
 
-    //     }
-    //     break;
-    
-    // default:
-    //     break;
-    // }
 }
 
 
@@ -147,7 +138,14 @@ void _BIX()
 /*============================================================================================================================================================================
 Sub-Fusion
 ============================================================================================================================================================================*/
-
+void blink(uint16_t TIME_BLINK)
+{
+    tight_loop_contents();
+    cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 1);
+    sleep_ms(TIME_BLINK);
+    cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 0);
+    sleep_ms(TIME_BLINK);
+}
 
 
 /*============================================================================================================================================================================
@@ -157,16 +155,31 @@ int main()
 {
     stdio_init_all();
 
-
-    // Initialise the Wi-Fi chip
     if (cyw43_arch_init())
     {
-        printf("Wi-Fi init failed\n");
+        // printf("Wi-Fi init failed\n");
         return -1;
     }
 
 
-    // // SPI initialisation
+
+
+
+    i2c_init(I2C_PORT_0, 100*1000);
+    gpio_set_function(I2C_SDA, GPIO_FUNC_I2C);
+    gpio_set_function(I2C_SCL, GPIO_FUNC_I2C);
+    gpio_pull_up(I2C_SDA);
+    gpio_pull_up(I2C_SCL);
+
+
+
+    // https://github.com/raspberrypi/pico-examples/tree/master/i2c
+
+    
+    
+    
+    
+        // // SPI initialisation
     // spi_init(SPI_PORT, 1000*1000);                  // 1MHz
     // gpio_set_function(PIN_MISO, GPIO_FUNC_SPI);
     // gpio_set_function(PIN_CS,   GPIO_FUNC_SIO);
@@ -176,35 +189,6 @@ int main()
     // gpio_set_dir(PIN_CS, GPIO_OUT);
     // gpio_put(PIN_CS, 1);
     // https://github.com/raspberrypi/pico-examples/tree/master/spi
-
-
-    // I2C Initialisation for SMBus communication
-    i2c_init(I2C_PORT_0, 100*1000); // 100kHz for SMBus
-    gpio_set_function(I2C_SDA, GPIO_FUNC_I2C);
-    gpio_set_function(I2C_SCL, GPIO_FUNC_I2C);
-    gpio_pull_up(I2C_SDA);
-    gpio_pull_up(I2C_SCL);
-
-    // Example SMBus communication with mainboard (Master)
-    
-    // Read data from the mainboard
-    // int result = i2c_read_blocking(I2C_PORT_0, 0x5A, CMD, 2, false); // 0x5A is the I2C address of the mainboard
-    // if (result < 0) {
-    //     printf("SMBus read failed\n");
-    // } else {
-    //     CMD = CMD; // Store the received command in CMD
-    //     printf("Received command: 0x%02X\n", CMD);
-    //     printf("Received data: 0x%02X\n", CMD);
-    // }
-
-    // https://github.com/raspberrypi/pico-examples/tree/master/i2c
-
-    
-    
-    
-    
-    
-    
 
     // // Set up our UART
     // uart_init(UART_ID, BAUD_RATE);
@@ -220,13 +204,5 @@ int main()
     // For more examples of UART use see https://github.com/raspberrypi/pico-examples/tree/master/uart
 
 
-    while (true)
-    {
-        tight_loop_contents();
-        // Pico W LED
-        cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 1);
-        sleep_ms(1000);
-        cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 0);
-        sleep_ms(1000);
-    }
+    blink(1000);
 }
