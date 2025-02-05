@@ -52,7 +52,7 @@ Defines     Var                             Val             Mô tả
 #define     I2C_PORT_0                      i2c0
 #define     I2C_SDA                         8
 #define     I2C_SCL                         9
-#define     I2C_SLAVE_ADDR                  0x0B            // Điều chỉnh Address sau @Kn45nb
+#define     I2C_SLAVE_ADDR                  0xB            // SMBus Host Slave Interface: 0x8, Smart Battery Charger/Charger Selector or Charger System Manager: 0x9, Smart Battery System Manager or Smart Battery Selector: 0xA, Smart Battery: 0xB
 
 // I2C_1 defines
 #define     I2C_PORT_1                      i2c1
@@ -106,7 +106,7 @@ const   char        OEM_INFORMATION[]           = "MAKE BY @Kn45nb";    // Thôn
         uint32_t    BATTERY_PRESENT_RATE        = 0x1;                  // Tốc độ Sạc/xả (Điện áp giữa 2 đầu nguồn điện)    // POWER_UNIT   // !set: 0x0 || 0xFFFFFFFF, (Âm sạc, dương xả) @Kn45nb $Do that
         uint32_t    BATTEY_REMAINING_CAPACITY   = 0x1;                  // Dung lượng còn lại của pin                       // POWER_UNIT   // !set: 0x0 || 0xFFFFFFFF
         uint32_t    BATTERY_VOLTAGE             = 0x4A38;               // Điện áp hiện tại của pin                         // mV           // 
-// Note: Có thể sử dụng các công cụ như Microsoft ASL Compiler để kiểm tra tính tuân thủ của các bảng ACPI. @Kn45nb
+        // Note: Có thể sử dụng các công cụ như Microsoft ASL Compiler để kiểm tra tính tuân thủ của các bảng ACPI. @Kn45nb
 
 
 // Package: _BIF (old version for Legacy. Don't carefull that 🥲)
@@ -125,13 +125,96 @@ const   char        OEM_INFORMATION[]           = "MAKE BY @Kn45nb";    // Thôn
 /*============================================================================================================================================================================
 Methor
 ============================================================================================================================================================================*/
-// Method: _BIX
-void _BIX()
+void _BST()
 {
 
 }
 
 
+void _BCT()     // Trả về thời gian sạc ước tính của pin
+{
+
+}
+
+void _BIF()     //Trả về thông tin tĩnh về pin (nói cách khác, số kiểu máy, số sê-ri, điện áp thiết kế, v.v.)
+{
+
+}
+
+void _BIX()     // Trả về thông tin tĩnh mở rộng về pin (nói cách khác, số kiểu máy, số sê-ri, điện áp thiết kế, v.v.)
+{
+
+}
+
+void _BMA()     // Đặt khoảng thời gian trung bình của phép đo dung lượng pin, tính bằng mili giây
+{
+
+}
+
+void _BMC()     // Kiểm soát hiệu chuẩn và sạc
+{
+
+}
+
+void _BMD()     // Trả về thông tin pin liên quan đến hiệu chuẩn lại pin và điều khiển sạc
+{
+
+}
+
+void _BMS()     // Đặt sampthời gian đo dung lượng pin, tính bằng mili giây
+{
+
+}
+
+void _BPC()     // Trả về các biến tĩnh được liên kết với các đặc tính nguồn hệ thống trên đường dẫn của pin và cài đặt hỗ trợ ngưỡng nguồn
+{
+
+}
+
+void _BPS()     // Trả về khả năng cung cấp năng lượng của pin tại thời điểm hiện tại
+{
+
+}
+
+void _BPT()     // Phương pháp điều khiển để đặt Ngưỡng nguồn pin
+{
+
+}
+
+void _GMT()     // Trả về trạng thái pin hiện tại (nói cách khác, thông tin động về pin, chẳng hạn như pin hiện đang sạc hay xả, ước tính dung lượng pin còn lại, v.v.)
+{
+
+}
+
+void _BTH()     // Trả về trạng thái pin hiện tại (nói cách khác, thông tin động về pin, chẳng hạn như pin hiện đang sạc hay xả, ước tính dung lượng pin còn lại, v.v.)
+{
+
+}
+
+void _BTM()     // Trả về thời gian chạy ước tính của pin ở tốc độ tiêu hao trung bình hiện tại hoặc thời gian chạy ở một tốc độ cụ thể
+{
+
+}
+
+void _BTP()     // Đặt điểm Ngắt pin, điểm này tạo ra SCI khi dung lượng pin đạt đến điểm được chỉ định
+{
+
+}
+
+void _OSC()     // Khả năng vận chuyển OSPM cho pin
+{
+
+}
+
+void _PCL()     // Danh sách các con trỏ đến các đối tượng thiết bị đại diện cho các thiết bị chạy bằng pin (https://uefi.org/htmlspecs/ACPI_Spec_6_4_html/10_Power_Source_and_Power_Meter_Devices/Power_Source_and_Power_Meter_Devices.html#pcl-power-consumer-list)
+{
+
+}
+
+void _STA()     // Trả về trạng thái chung của pin (https://uefi.org/htmlspecs/ACPI_Spec_6_4_html/06_Device_Configuration/Device_Configuration.html#sta-device-status)
+{
+
+}
 
 
 
@@ -160,10 +243,6 @@ int main()
         // printf("Wi-Fi init failed\n");
         return -1;
     }
-
-
-
-
 
     i2c_init(I2C_PORT_0, 100*1000);
     gpio_set_function(I2C_SDA, GPIO_FUNC_I2C);
