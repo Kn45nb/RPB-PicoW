@@ -1,5 +1,0 @@
-SDK: 		v2.1.0
-Toolchain:	13.3Rel1
-Ninja:		v1.12.1
-CMake:		v3.31.4
-
