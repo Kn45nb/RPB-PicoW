@@ -15,9 +15,9 @@ if(WIN32)
 else()
     set(USERHOME $ENV{HOME})
 endif()
-set(sdkVersion 2.1.0)
-set(toolchainVersion 13_3_Rel1)
-set(picotoolVersion 2.1.0)
+set(sdkVersion 2.2.0)
+set(toolchainVersion 14_2_Rel1)
+set(picotoolVersion 2.2.0)
 set(picoVscode ${USERHOME}/.pico-sdk/cmake/pico-vscode.cmake)
 if (EXISTS ${picoVscode})
     include(${picoVscode})
@@ -28,37 +28,41 @@ set(PICO_BOARD pico_w CACHE STRING "Board type")
 # Pull in Raspberry Pi Pico SDK (must be before project)
 include(pico_sdk_import.cmake)
 
-project(KN45N-BMS-test C CXX ASM)
+project(DemoProject C CXX ASM)
 
 # Initialise the Raspberry Pi Pico SDK
 pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
 
-add_executable(KN45N-BMS-test KN45N-BMS-test.cpp )
+add_executable(DemoProject main.c )
 
-pico_set_program_name(KN45N-BMS-test "KN45N-BMS-test")
-pico_set_program_version(KN45N-BMS-test "0.1")
+pico_set_program_name(DemoProject "DemoProject")
+pico_set_program_version(DemoProject "0.1")
+
+# Generate PIO header
+pico_generate_pio_header(DemoProject ${CMAKE_CURRENT_LIST_DIR}/blink.pio)
 
 # Modify the below lines to enable/disable output over UART/USB
-pico_enable_stdio_uart(KN45N-BMS-test 0)
-pico_enable_stdio_usb(KN45N-BMS-test 0)
+pico_enable_stdio_uart(DemoProject 0)
+pico_enable_stdio_usb(DemoProject 0)
 
 # Add the standard library to the build
-target_link_libraries(KN45N-BMS-test
+target_link_libraries(DemoProject
         pico_stdlib)
 
 # Add the standard include files to the build
-target_include_directories(KN45N-BMS-test PRIVATE
-  ${CMAKE_CURRENT_LIST_DIR}
+target_include_directories(DemoProject PRIVATE
+        ${CMAKE_CURRENT_LIST_DIR}
 )
 
 # Add any user requested libraries
-target_link_libraries(KN45N-BMS-test 
+target_link_libraries(DemoProject 
         hardware_spi
         hardware_i2c
-        pico_cyw43_arch_none
+        hardware_pio
+        
         )
 
-pico_add_extra_outputs(KN45N-BMS-test)
+pico_add_extra_outputs(DemoProject)
 
