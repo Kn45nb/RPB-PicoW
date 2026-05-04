@@ -15,10 +15,9 @@ License:	MIT License
 
 
 /*=============================================================
-Include	    Lib
+Include	    Lib                         Note
 =============================================================*/
-#include    <stdio.h>
-#include    "hardware/uart.h"
+#include    <stdio.h>                   // testing
 #include    "pico/stdlib.h"
 #include    "hardware/spi.h"
 #include    "hardware/i2c.h"
@@ -59,9 +58,9 @@ const       uint32_t    POWER_UNIT                  = 0x0;                  // B
 const       uint32_t    DESIGN_CAPACITY             = 0x186A0;              // Dung lượng thiết kế của pin                      // POWER_UNIT   // !set: 0x0 || 0xFFFFFFFF
             uint32_t    LAST_FULL_CHARGE_CAPACITY   = 0x186A0;              // Dung lượng sạc đầy cuối cùng của pin             // POWER_UNIT   // !set: 0x0 || 0xFFFFFFFF, max: DESIGN_CAPACITY, @Kn45nb Cần một bộ logic i++, khởi tạo là DESIGN_CAPACITY trừ dần mỗi lần time full.
 const       uint32_t    BATTERY_TECHNOLOGY          = 0x1;                  // Công nghệ tái tạo pin (khả năng sạc)             // N/a          // 0: No, 1: Yes
-const       uint32_t    DESIGN_VOLTAGE              = 0x4A38;               // Điện áp thiết kế của pin                         // mV           // !set: 0x0 || 0xFFFFFFFF, Basic voltage: 19V/12V
-            uint32_t    DESIGN_CAPACITY_OF_WARNING  = 0x2710;               // Dung lượng cảnh báo thiết kế của pin             // POWER_UNIT   // Windows ignores this value (Nhưng Bios thì rất hay đọc)
-            uint32_t    DESIGN_CAPACITY_OF_LOW      = 0x1388;               // Dung lượng thấp thiết kế của pin (hibernation)   // POWER_UNIT   // 0-5% of LAST_FULL_CHARGE_CAPACITY, @Kn45nb Cần fun hoặc logic cập nhật sau khi update LAST_FULL_CHARGE_CAPACITY
+const       uint32_t    DESIGN_VOLTAGE              = 0x2EE0;               // Điện áp thiết kế của pin                         // mV           // !set: 0x0 || 0xFFFFFFFF, Basic voltage: 19V: 4A38 // 12V: 2EE0
+const       uint32_t    DESIGN_CAPACITY_OF_WARNING  = 0x2710;               // Dung lượng cảnh báo thiết kế của pin             // POWER_UNIT   // Windows ignores this value (Nhưng Bios thì rất hay đọc)
+const       uint32_t    DESIGN_CAPACITY_OF_LOW      = 0x1388;               // Dung lượng thấp thiết kế của pin (hibernation)   // POWER_UNIT   // 0-5% of LAST_FULL_CHARGE_CAPACITY, @Kn45nb Cần fun hoặc logic cập nhật sau khi update LAST_FULL_CHARGE_CAPACITY
 const       uint32_t    CAPACITY_GRANULARITY_1      = 0x1;                  // Độ tinh mịch (phân giải) dung lượng trên ngưỡng  // POWER_UNIT   // <=1% of DESIGN_CAPACITY
 const       uint32_t    CAPACITY_GRANULARITY_2      = 0x1;                  // Độ tinh mịch (phân giải) dung lượng dưới ngưỡng  // POWER_UNIT   // <=75mW, (exp: 0.25% of 25000mWh)
             uint32_t    CYCLE_COUNT                 = 0x0;                  // Số lần sạc của pin                               // Times        // !set: 0xFFFFFFFF
@@ -72,14 +71,14 @@ const       uint32_t    MAX_AVERAGING_INTERVAL      = 0x1;                  // T
 const       uint32_t    MIN_AVERAGING_INTERVAL      = 0x1;                  // Thời gian trung bình min của cảm biến PIN        // ms           //
 const       char        MODEL_NUMBER[]              = "Notebook";           // Mã số model của pin                              // N/a          // !NULL
 const       char        SERIAL_NUMBER[]             = "0001";               // Số serial duy nhất của pin                       // N/a          // !NULL
-const       char        BATTEY_TYPE[]               = "LION";               // Loại pin                                         // N/a          //
+const       char        BATTERY_TYPE[]              = "LION";               // Loại pin                                         // N/a          // Li-on, FeLi-on
 const       char        OEM_INFORMATION[]           = "MAKE BY @Kn45nb";    // Thông tin OEM                                    // N/a          //
 
 
 // Package: _BST
             uint32_t    BATTERY_STATE               = 0x1;                  // Trạng thái pin                                   // N/a          // 0x0000: Charging, 0x0001: Discharging, ...
             uint32_t    BATTERY_PRESENT_RATE        = 0x1;                  // Tốc độ Sạc/xả (Điện áp giữa 2 đầu nguồn điện)    // POWER_UNIT   // !set: 0x0 || 0xFFFFFFFF, (Âm sạc, dương xả) @Kn45nb $Do that
-            uint32_t    BATTEY_REMAINING_CAPACITY   = 0x1;                  // Dung lượng còn lại của pin                       // POWER_UNIT   // !set: 0x0 || 0xFFFFFFFF
+            uint32_t    BATTERY_REMAINING_CAPACITY  = 0x1;                  // Dung lượng còn lại của pin                       // POWER_UNIT   // !set: 0x0 || 0xFFFFFFFF
             uint32_t    BATTERY_VOLTAGE             = 0x4A38;               // Điện áp hiện tại của pin                         // mV           // 
 
 // Package: _BIF (old version for Legacy. Don't carefull that 🥲)
@@ -88,7 +87,7 @@ const       char        OEM_INFORMATION[]           = "MAKE BY @Kn45nb";    // T
 // Package: _BTP (Checkpoint charging using cơ chế Điểm ngắt pin. Cần dùng trong powercfg/batteryreport @Kn45nb)
 
 
-// Package: _SUN (Option: Số đơn vị khe cắm, nếu chơi thứ tự pin thì không cần @Kn45nb)
+// Package: _SUN (Option: Số đơn vị khe cắm, nếu "chơi" thứ tự pin thì không cần @Kn45nb)
 
 
 // Package: _STA (Sau làm Funsion Shutdows PSU/PIN thì mới động tới @Kn45nb)
